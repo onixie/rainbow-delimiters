@@ -209,6 +209,13 @@ Nil disables brace highlighting."
   :type 'boolean
   :group 'rainbow-delimiters-toggle-delimiter-highlighting)
 
+(defcustom rainbow-delimiters-stop-cyclic-depth-highlighting-p nil
+  "Stop highlight delimiters which exceed maximum depth.
+Nil (default) cyclically highlight nested delimiters.
+Non-nil stop cyclically highlight nested delimiters."
+  :tag "Stop Highlight Cyclically?"
+  :type 'boolean
+  :group 'rainbow-delimiters-toggle-delimiter-highlighting)
 
 ;;; Faces:
 
@@ -295,6 +302,8 @@ For example: 'rainbow-delimiters-depth-1-face'."
             ;; Our nesting depth has a face defined for it.
             (and (< depth rainbow-delimiters-max-face-count)
                  depth)
+	    (and rainbow-delimiters-stop-cyclic-depth-highlighting-p
+	      rainbow-delimiters-max-face-count)
             ;; Deeper than # of defined faces; cycle back through to beginning.
             ;; Depth 1 face is only applied to the outermost delimiter pair.
             ;; Cycles infinitely through faces 2-9.
